@@ -3,25 +3,36 @@
     <ion-title>
       Mi tienda
     </ion-title>
+
+    <ion-buttons end>
+
+      <button ion-button icon-only>
+        <ion-icon name="cart"></ion-icon>
+        <ion-badge color="danger" class="carrito-numero"
+        *ngIf="_cs.items.length > 0" >{{ _cs.items.length }}</ion-badge>
+      </button>
+
+      &nbsp;
+      &nbsp;
+
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-<ion-grid>
-  <ion-row *ngFor="let pares of _ps.productos" >
-    <ion-col *ngFor="let item of pares" 
-    [navPush]="productoPage"
-    [navParams] = "{ producto: item }"
-    >
-      <img [src]="item.codigo | imagen">
-      <p>{{item.producto}}</p>
-    <br>
-    {{item.precio_compra | currency:'USD': true}}
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-grid>
+    <ion-row *ngFor="let pares of _ps.productos">
+      <ion-col *ngFor="let item of pares" [navPush]="productoPage" [navParams]="{ producto: item }">
+        <img [src]="item.codigo | imagen">
+        <p>{{item.producto}}</p>
+        <br>
+        {{item.precio_compra | currency:'USD': true}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-<ion-infinite-scroll (ionInfinite)="siguiente_pagina($event)">
+  <ion-infinite-scroll (ionInfinite)="siguiente_pagina($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
