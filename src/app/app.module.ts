@@ -1,3 +1,4 @@
+import { ImagenPipe } from './../pipes/imagen/imagen';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -11,9 +12,12 @@ import { CarritoProvider } from '../providers/carrito/carrito';
 import { ProductosProvider } from '../providers/productos/productos';
 import { UsuarioProvider } from '../providers/usuario/usuario';
 
+ImagenPipe
+
 @NgModule({
   declarations: [
     MyApp,
+    ImagenPipe,
     HomePage
   ],
   imports: [
