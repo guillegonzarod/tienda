@@ -7,10 +7,28 @@ export class ProductosProvider {
 
   pagina: number = 0;
   productos: any[] = [];
+  lineas: any[] = [];
 
   constructor(public http: HttpClient) {
-    // Invocamos la Función de 'cargar_todos()' porque vamos a cargarla siempre:
+    // Invocamos la Función de 'cargar_todos()' porque queremos cargarla siempre:
     this.cargar_todos();
+    // Invocamos la Función de 'cargar_lineas()' porque queremos cargarla siempre:
+    this.cargar_lineas();
+  }
+
+  cargar_lineas() {
+
+    let url = URL_SERVICIOS + "/lineas";
+    this.http.get(url)
+      .subscribe((data: any) => {
+        if (data.error) {
+          // console.error(data.error);
+        } else {
+          this.lineas = data.lineas;
+          console.log(this.lineas);
+        }
+
+      })
   }
 
   cargar_todos() {
@@ -26,7 +44,7 @@ export class ProductosProvider {
           if (data.error) {
             // console.error(data.error);
           } else {
-            let nuevaData = this.agrupar(data.lineas, 2);
+            let nuevaData = this.agrupar(data.productos, 2);
             // Añadimos cada elemento del Array de la propiedad 'data.lineas' de la respuesta en el Array 'this.productos':
             this.productos.push(...nuevaData);
             // Avanzamos una página para cargar la siguiente página cuando se vuelva a llamar al método:
