@@ -1,0 +1,16 @@
+import { Injectable } from '@angular/core';
+
+/*
+  Generated class for the UsuarioProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+@Injectable()
+export class UsuarioProvider {
+
+  constructor() {
+    console.log('Hello UsuarioProvider Provider');
+  }
+
+}
