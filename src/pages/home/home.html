@@ -8,8 +8,8 @@
 
 <ion-content padding>
 <ion-grid>
-  <ion-row *ngFor="let item of _ps.productos" >
-    <ion-col>
+  <ion-row *ngFor="let pares of _ps.productos" >
+    <ion-col *ngFor="let item of pares" >
       <img src="http://localhost/rest/public/img/productos/{{ item.codigo }}.jpg">
       <p>{{item.producto}}</p>
     <br>

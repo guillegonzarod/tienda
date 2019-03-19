@@ -24,10 +24,11 @@ export class ProductosProvider {
         .subscribe(data => {
           // console.log(data);
           if (data.error) {
-            console.error(data.error);
+            // console.error(data.error);
           } else {
+            let nuevaData = this.agrupar(data.lineas, 2);
             // Añadimos cada elemento del Array de la propiedad 'data.lineas' de la respuesta en el Array 'this.productos':
-            this.productos.push(...data.lineas);
+            this.productos.push(...nuevaData);
             // Avanzamos una página para cargar la siguiente página cuando se vuelva a llamar al método:
             this.pagina += 1;
           }
@@ -36,6 +37,18 @@ export class ProductosProvider {
     });
 
     return promesa;
+  }
+
+  // Descomponemos un Array (arr) de una Dimensión en un Array de un Número de Dimensiones dado (tamano):
+  private agrupar(arr: any, tamano: number) {
+
+    let nuevoArreglo = [];
+    for (let i = 0; i < arr.length; i += tamano) {
+      nuevoArreglo.push(arr.slice(i, i + tamano));
+    }
+    console.log(nuevoArreglo);
+    
+    return nuevoArreglo;
   }
 
 }
