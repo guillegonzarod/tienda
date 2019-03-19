@@ -1,6 +1,8 @@
+import { UsuarioProvider } from './../usuario/usuario';
 import { Injectable } from '@angular/core';
-import { AlertController, Platform } from 'ionic-angular';
+import { AlertController, Platform, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { CarritoPage, LoginPage } from '../../pages/index.paginas';
 
 @Injectable()
 export class CarritoProvider {
@@ -9,8 +11,40 @@ export class CarritoProvider {
 
   constructor(private alertCtrl: AlertController,
     private platform: Platform,
-    private storage: Storage) {
+    private storage: Storage,
+    private modalCtrl: ModalController,
+    private _us: UsuarioProvider) {
     this.cargar_storage();
+  }
+
+  ver_carrito(){
+
+    let modal:any;
+
+    // Si el 'Token' existe mostramos la Página del 'Carrito':
+    if( this._us.token ){
+      //mostrar pagina del carrito
+      modal = this.modalCtrl.create( CarritoPage );
+
+    }
+    // Si el 'Token' NO existe mostramos la Página del 'Login':
+    else{
+      // mostrar el login
+      modal = this.modalCtrl.create( LoginPage );
+    }
+
+    modal.present();
+
+    // Si Cancelamos la Página Modal y YA estamos AUTENTICADOS debe mostramos la Página del 'Carrito':
+    modal.onDidDismiss(  (abrirCarrito:boolean)=>{
+
+      console.log(abrirCarrito);
+
+      if( abrirCarrito ){
+        this.modalCtrl.create( CarritoPage ).present();
+      }
+
+    })
   }
 
   agregar_carrito(item_parametro: any) {
