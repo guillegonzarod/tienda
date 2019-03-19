@@ -7,7 +7,19 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+
+import { 
+  CarritoPage, 
+  CategoriasPage, 
+  HomePage, 
+  LoginPage, 
+  OrdenesDetallePage, 
+  OrdenesPage, 
+  PorCategoriasPage, 
+  ProductoPage, 
+  TabsPage 
+} from '../pages/index.paginas';
+
 import { CarritoProvider } from '../providers/carrito/carrito';
 import { ProductosProvider } from '../providers/productos/productos';
 import { UsuarioProvider } from '../providers/usuario/usuario';
@@ -18,7 +30,15 @@ ImagenPipe
   declarations: [
     MyApp,
     ImagenPipe,
-    HomePage
+    CarritoPage, 
+    CategoriasPage, 
+    HomePage, 
+    LoginPage, 
+    OrdenesDetallePage, 
+    OrdenesPage, 
+    PorCategoriasPage, 
+    ProductoPage, 
+    TabsPage 
   ],
   imports: [
     BrowserModule,
@@ -28,7 +48,15 @@ ImagenPipe
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    CarritoPage, 
+    CategoriasPage, 
+    HomePage, 
+    LoginPage, 
+    OrdenesDetallePage, 
+    OrdenesPage, 
+    PorCategoriasPage, 
+    ProductoPage, 
+    TabsPage 
   ],
   providers: [
     StatusBar,

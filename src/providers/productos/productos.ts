@@ -21,7 +21,7 @@ export class ProductosProvider {
       let url = URL_SERVICIOS + "/productos/todos/" + this.pagina;
 
       this.http.get(url)
-        .subscribe(data => {
+        .subscribe((data: any) => {
           // console.log(data);
           if (data.error) {
             // console.error(data.error);
@@ -47,7 +47,7 @@ export class ProductosProvider {
       nuevoArreglo.push(arr.slice(i, i + tamano));
     }
     console.log(nuevoArreglo);
-    
+
     return nuevoArreglo;
   }
 

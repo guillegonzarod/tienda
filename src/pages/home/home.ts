@@ -1,3 +1,4 @@
+import { ProductoPage } from './../producto/producto';
 import { ProductosProvider } from './../../providers/productos/productos';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
@@ -7,6 +8,8 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  productoPage: any = ProductoPage; 
 
   constructor(public navCtrl: NavController, private _ps: ProductosProvider) {
 

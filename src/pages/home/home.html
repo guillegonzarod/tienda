@@ -9,7 +9,10 @@
 <ion-content padding>
 <ion-grid>
   <ion-row *ngFor="let pares of _ps.productos" >
-    <ion-col *ngFor="let item of pares" >
+    <ion-col *ngFor="let item of pares" 
+    [navPush]="productoPage"
+    [navParams] = "{ producto: item }"
+    >
       <img [src]="item.codigo | imagen">
       <p>{{item.producto}}</p>
     <br>
