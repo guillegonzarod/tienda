@@ -1,12 +1,6 @@
+import { UsuarioProvider } from './../../providers/usuario/usuario';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,11 +9,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  correo:string = "";
+  contrasena:string = "";
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private viewCtrl: ViewController, 
+    private _us: UsuarioProvider) {
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  ingresar(){
+    this._us.ingresar(this.correo, this.contrasena).subscribe(()=>{
+      
+    });
   }
 
 }
