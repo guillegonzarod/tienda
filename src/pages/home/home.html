@@ -1,15 +1,23 @@
 <ion-header>
   <ion-navbar>
+
+    <ion-buttons start>
+      <button ion-button *ngIf="_us.activo()" (click)="_us.cerrar_sesion()">
+        Salir
+      </button>
+    </ion-buttons>
+
     <ion-title>
-      Mi tienda
+      Mi Tienda
     </ion-title>
 
     <ion-buttons end>
 
-      <button ion-button icon-only (click)="_cs.ver_carrito()" >
+      <button ion-button icon-only (click)="_cs.ver_carrito()">
         <ion-icon name="cart"></ion-icon>
-        <ion-badge color="danger" class="carrito-numero"
-        *ngIf="_cs.items.length > 0" >{{ _cs.items.length }}</ion-badge>
+        <ion-badge color="danger" class="carrito-numero" *ngIf="_cs.items.length > 0">
+          {{ _cs.items.length }}
+        </ion-badge>
       </button>
 
       &nbsp;

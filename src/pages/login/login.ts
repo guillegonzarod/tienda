@@ -15,14 +15,16 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private viewCtrl: ViewController, 
-    private _us: UsuarioProvider) {
+    private _us: UsuarioProvider,
+    public viewCtrl: ViewController) {
     
   }
 
   ingresar(){
     this._us.ingresar(this.correo, this.contrasena).subscribe(()=>{
-      
+      if( this._us.activo() ){
+        this.viewCtrl.dismiss(true);
+      }
     });
   }
 
