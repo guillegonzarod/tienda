@@ -8,6 +8,7 @@ import { CarritoPage, LoginPage } from '../../pages/index.paginas';
 export class CarritoProvider {
 
   items: any[] = [];
+  total_carrito:number = 0;
 
   constructor(private alertCtrl: AlertController,
     private platform: Platform,
@@ -15,6 +16,7 @@ export class CarritoProvider {
     private modalCtrl: ModalController,
     private _us: UsuarioProvider) {
     this.cargar_storage();
+    this.actualizar_total();
   }
 
   ver_carrito(){
@@ -63,7 +65,17 @@ export class CarritoProvider {
     }
 
     this.items.push(item_parametro);
+    this.actualizar_total();
     this.guardar_storage();
+  }
+
+  actualizar_total(){
+
+    this.total_carrito = 0;
+    for( let item of this.items ){
+      this.total_carrito += Number( item.precio_compra );
+    }
+
   }
 
   private guardar_storage() {
