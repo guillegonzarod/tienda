@@ -19,4 +19,19 @@ export class OrdenesDetallePage {
     this.orden = this.navParams.get("orden");
 
   }
+
+  borrar_orden( orden_id:string ){
+
+    this._cs.borrar_orden(orden_id)
+            .subscribe( (data: any) =>{
+
+              if( data.error ){
+                // manejo de errores
+              }else{
+                this.navCtrl.pop();
+              }
+        })
+
+
+  }
 }
