@@ -1,3 +1,5 @@
+import { URL_SERVICIOS } from './../../config/url.servicios';
+import { HttpClient } from '@angular/common/http';
 import { UsuarioProvider } from './../usuario/usuario';
 import { Injectable } from '@angular/core';
 import { AlertController, Platform, ModalController } from 'ionic-angular';
@@ -14,9 +16,62 @@ export class CarritoProvider {
     private platform: Platform,
     private storage: Storage,
     private modalCtrl: ModalController,
-    private _us: UsuarioProvider) {
+    private _us: UsuarioProvider,
+    private http: HttpClient) {
     this.cargar_storage();
     this.actualizar_total();
+  }
+
+  remove_item( idx:number ){
+
+    this.items.splice(idx,1);
+    this.guardar_storage();
+
+  }
+
+  realizar_pedido(){
+
+    let codigos:string[]=[];
+
+    for( let item of this.items ){
+      codigos.push( item.codigo );
+    }
+
+        // Añadimos las cabeceras (Headers) de la petición POST:
+        var header = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+    
+        // Añadimos el Objeto JSON que queremos enviar al servicio Rest:
+        let body = JSON.stringify({
+          "items": codigos.join(","),
+        });
+    
+    let url = `${ URL_SERVICIOS }/pedidos/realizar_orden/${ this._us.token }/${ this._us.id_usuario }`;
+
+    this.http.post( url, body, header )
+             .subscribe( (resp: any)  =>{
+
+               if( resp.error ){
+                 // mostramos error
+                 this.alertCtrl.create({
+                   title: "Error en la orden",
+                   subTitle: resp.mensaje,
+                   buttons: ["OK"]
+                 }).present();
+
+               }else{
+                 // todo bien!
+                this.items = [];
+                this.alertCtrl.create({
+                  title: "Orden realizada!",
+                  subTitle: "Nos contactaremos con usted próximamente",
+                  buttons: ["OK"]
+                }).present();
+               }
+          })
   }
 
   ver_carrito(){
@@ -39,8 +94,6 @@ export class CarritoProvider {
 
     // Si Cancelamos la Página Modal y YA estamos AUTENTICADOS debe mostramos la Página del 'Carrito':
     modal.onDidDismiss(  (abrirCarrito:boolean)=>{
-
-      console.log(abrirCarrito);
 
       if( abrirCarrito ){
         this.modalCtrl.create( CarritoPage ).present();

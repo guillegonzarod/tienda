@@ -26,7 +26,7 @@ export class ProductosProvider {
           // console.error(data.error);
         } else {
           this.lineas = data.lineas;
-          console.log(this.lineas);
+          // console.log(this.lineas);
         }
 
       })
@@ -38,7 +38,7 @@ export class ProductosProvider {
 
     this.http.get(url)
       .subscribe((data: any) => {
-        console.log(data.productos);
+        // console.log(data.productos);
         this.por_categoria = data.productos;
       });
 
