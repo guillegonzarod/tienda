@@ -10,7 +10,8 @@ import { CarritoPage, LoginPage } from '../../pages/index.paginas';
 export class CarritoProvider {
 
   items: any[] = [];
-  total_carrito:number = 0;
+  total_carrito: number = 0;
+  ordenes: any[] = [];
 
   constructor(private alertCtrl: AlertController,
     private platform: Platform,
@@ -22,81 +23,81 @@ export class CarritoProvider {
     this.actualizar_total();
   }
 
-  remove_item( idx:number ){
+  remove_item(idx: number) {
 
-    this.items.splice(idx,1);
+    this.items.splice(idx, 1);
     this.guardar_storage();
 
   }
 
-  realizar_pedido(){
+  realizar_pedido() {
 
-    let codigos:string[]=[];
+    let codigos: string[] = [];
 
-    for( let item of this.items ){
-      codigos.push( item.codigo );
+    for (let item of this.items) {
+      codigos.push(item.codigo);
     }
 
-        // Añadimos las cabeceras (Headers) de la petición POST:
-        var header = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        };
-    
-        // Añadimos el Objeto JSON que queremos enviar al servicio Rest:
-        let body = JSON.stringify({
-          "items": codigos.join(","),
-        });
-    
-    let url = `${ URL_SERVICIOS }/pedidos/realizar_orden/${ this._us.token }/${ this._us.id_usuario }`;
+    // Añadimos las cabeceras (Headers) de la petición POST:
+    var header = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-    this.http.post( url, body, header )
-             .subscribe( (resp: any)  =>{
+    // Añadimos el Objeto JSON que queremos enviar al servicio Rest:
+    let body = JSON.stringify({
+      "items": codigos.join(","),
+    });
 
-               if( resp.error ){
-                 // mostramos error
-                 this.alertCtrl.create({
-                   title: "Error en la orden",
-                   subTitle: resp.mensaje,
-                   buttons: ["OK"]
-                 }).present();
+    let url = `${URL_SERVICIOS}/pedidos/realizar_orden/${this._us.token}/${this._us.id_usuario}`;
 
-               }else{
-                 // todo bien!
-                this.items = [];
-                this.alertCtrl.create({
-                  title: "Orden realizada!",
-                  subTitle: "Nos contactaremos con usted próximamente",
-                  buttons: ["OK"]
-                }).present();
-               }
-          })
+    this.http.post(url, body, header)
+      .subscribe((resp: any) => {
+
+        if (resp.error) {
+          // mostramos error
+          this.alertCtrl.create({
+            title: "Error en la orden",
+            subTitle: resp.mensaje,
+            buttons: ["OK"]
+          }).present();
+
+        } else {
+          // todo bien!
+          this.items = [];
+          this.alertCtrl.create({
+            title: "Orden realizada!",
+            subTitle: "Nos contactaremos con usted próximamente",
+            buttons: ["OK"]
+          }).present();
+        }
+      })
   }
 
-  ver_carrito(){
+  ver_carrito() {
 
-    let modal:any;
+    let modal: any;
 
     // Si el 'Token' existe mostramos la Página del 'Carrito':
-    if( this._us.token ){
+    if (this._us.token) {
       //mostrar pagina del carrito
-      modal = this.modalCtrl.create( CarritoPage );
+      modal = this.modalCtrl.create(CarritoPage);
 
     }
     // Si el 'Token' NO existe mostramos la Página del 'Login':
-    else{
+    else {
       // mostrar el login
-      modal = this.modalCtrl.create( LoginPage );
+      modal = this.modalCtrl.create(LoginPage);
     }
 
     modal.present();
 
     // Si Cancelamos la Página Modal y YA estamos AUTENTICADOS debe mostramos la Página del 'Carrito':
-    modal.onDidDismiss(  (abrirCarrito:boolean)=>{
+    modal.onDidDismiss((abrirCarrito: boolean) => {
 
-      if( abrirCarrito ){
-        this.modalCtrl.create( CarritoPage ).present();
+      if (abrirCarrito) {
+        this.modalCtrl.create(CarritoPage).present();
       }
 
     })
@@ -122,11 +123,11 @@ export class CarritoProvider {
     this.guardar_storage();
   }
 
-  actualizar_total(){
+  actualizar_total() {
 
     this.total_carrito = 0;
-    for( let item of this.items ){
-      this.total_carrito += Number( item.precio_compra );
+    for (let item of this.items) {
+      this.total_carrito += Number(item.precio_compra);
     }
 
   }
@@ -177,6 +178,24 @@ export class CarritoProvider {
 
     return promesa;
 
+  }
+
+
+  cargar_ordenes() {
+
+    let url = `${URL_SERVICIOS}/pedidos/obtener_pedidos/${this._us.token}/${this._us.id_usuario}`;
+
+    this.http.get(url)
+      .map(resp => resp)
+      .subscribe((data: any) => {
+
+        if (data.error) {
+          // manejar el error
+        } else {
+
+          this.ordenes = data.ordenes;
+        }
+      })
   }
 
 }
