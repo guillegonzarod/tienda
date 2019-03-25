@@ -10,6 +10,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 
 import { 
+  BusquedaPage,
   CarritoPage, 
   CategoriasPage, 
   HomePage, 
@@ -39,7 +40,8 @@ ImagenPipe
     OrdenesPage, 
     PorCategoriasPage, 
     ProductoPage, 
-    TabsPage 
+    TabsPage,
+    BusquedaPage 
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ ImagenPipe
     OrdenesPage, 
     PorCategoriasPage, 
     ProductoPage, 
-    TabsPage 
+    TabsPage,
+    BusquedaPage 
   ],
   providers: [
     StatusBar,

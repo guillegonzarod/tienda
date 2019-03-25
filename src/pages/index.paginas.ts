@@ -1,3 +1,4 @@
+export { BusquedaPage } from './busqueda/busqueda';
 export { TabsPage } from './tabs/tabs';
 export { ProductoPage } from './producto/producto';
 export { PorCategoriasPage } from './por-categorias/por-categorias';

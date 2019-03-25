@@ -9,6 +9,7 @@ export class ProductosProvider {
   productos: any[] = [];
   lineas: any[] = [];
   por_categoria:any[] = [];
+  resultados: any[] = [];
 
   constructor(public http: HttpClient) {
     // Invocamos la Función de 'cargar_todos()' porque queremos cargarla siempre:
@@ -80,6 +81,21 @@ export class ProductosProvider {
     console.log(nuevoArreglo);
 
     return nuevoArreglo;
+  }
+
+  buscar_producto( termino:string ){
+
+    let url = URL_SERVICIOS + "/productos/buscar/" + termino;
+
+    this.http.get( url )
+            .subscribe( (resp: any) =>{
+
+              let data = resp;
+
+              this.resultados = data.productos;
+              console.log(this.resultados);
+
+            });
   }
 
 }
